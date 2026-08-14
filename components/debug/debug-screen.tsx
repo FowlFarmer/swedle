@@ -143,7 +143,7 @@ export function DebugScreen() {
               {results.length > 0 && !selected && (
                 <ul>
                   {results.map((company) => (
-                    <li key={company.slug}><button onClick={() => { setSelected(company); setQuery(company.name); setResults([]); }} type="button">{company.name}</button></li>
+                    <li key={company.slug}><button onClick={() => { setSelected(company); setQuery(company.name); setResults([]); }} type="button"><span>{company.name}</span><small>{company.dailyEligible ? "Daily pool" : "Guess only"}</small></button></li>
                   ))}
                 </ul>
               )}

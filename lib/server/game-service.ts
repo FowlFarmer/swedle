@@ -2,7 +2,7 @@ import "server-only";
 
 import { randomUUID } from "node:crypto";
 
-import { COMPANY_BY_SLUG, COMPANIES } from "@/lib/data/companies";
+import { COMPANY_BY_SLUG, COMPANIES, DAILY_COMPANIES } from "@/lib/data/companies";
 import { buildShareText, compareCompanies } from "@/lib/game/comparison";
 import { computePlayerStats, type CompletedRun } from "@/lib/game/stats";
 import { getRedis, REDIS_PREFIX } from "@/lib/server/redis";
@@ -49,8 +49,8 @@ function epochDay(date: string) {
 }
 
 function chooseCompany(excluded: Set<string>, currentSlug?: string) {
-  const candidates = COMPANIES.filter((company) => !excluded.has(company.slug) && company.slug !== currentSlug);
-  const pool = candidates.length ? candidates : COMPANIES.filter((company) => company.slug !== currentSlug);
+  const candidates = DAILY_COMPANIES.filter((company) => !excluded.has(company.slug) && company.slug !== currentSlug);
+  const pool = candidates.length ? candidates : DAILY_COMPANIES.filter((company) => company.slug !== currentSlug);
   if (!pool.length) throw new Error("No company is available.");
   return pool[crypto.getRandomValues(new Uint32Array(1))[0] % pool.length];
 }
@@ -219,7 +219,7 @@ export async function searchCompanies(query: string) {
   return COMPANIES
     .filter((company) => company.name.toLocaleLowerCase().includes(clean))
     .slice(0, 8)
-    .map(({ slug, name }) => ({ slug, name }));
+    .map(({ slug, name, dailyEligible }) => ({ slug, name, dailyEligible }));
 }
 
 export async function getAdminState() {
@@ -233,7 +233,7 @@ export async function getAdminState() {
       source: puzzle.selectionSource,
       solverCount: Number((await getRedis().get<number>(solverKey(puzzle.id))) ?? 0),
       updatedAt: puzzle.updatedAt,
-      company: { slug: company.slug, name: company.name },
+      company: { slug: company.slug, name: company.name, dailyEligible: company.dailyEligible },
     },
   };
 }

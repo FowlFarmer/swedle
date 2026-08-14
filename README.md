@@ -8,7 +8,7 @@ A backend-authoritative daily software-company guessing game. Players compare fo
 2. Copy `.env.example` to `.env.local` and fill in its REST credentials and secrets.
 3. Install dependencies with `npm install` and start the app with `npm run dev`.
 
-The app intentionally has no browser-side puzzle clock. `GET /api/game` and every guess call resolve the active UTC puzzle in Postgres. The browser receives an opaque run token and renders the returned state.
+The app intentionally has no browser-side puzzle clock. `GET /api/game` and every guess call resolve the active UTC puzzle in Redis. The browser receives an opaque run token and renders the returned state.
 
 ## Vercel setup
 
@@ -22,7 +22,7 @@ The app intentionally has no browser-side puzzle clock. `GET /api/game` and ever
 
 ## Data maintenance
 
-The initial catalog in `data/companies.sql` is deliberately curated rather than scraped. `npm run generate:data` converts it into typed application data. Compensation and company-size values are estimates with an as-of date and should be reviewed before launch and periodically afterward. Domain arrays use set semantics: exact sets are green, any overlap is orange, and disjoint sets are red.
+The catalogs in `data/companies.sql` and `data/companies-expanded.sql` are deliberately curated rather than scraped. `data/daily-eligible-companies.txt` is the stricter automatic-answer allowlist; every other catalog company remains searchable and guessable. `npm run generate:data` combines both sources into typed application data and validates catalog size, slug uniqueness, and allowlist references. Compensation and company-size values are estimates with an as-of date and should be reviewed periodically. Domain arrays use set semantics: exact sets are green, any overlap is orange, and disjoint sets are red.
 
 All application keys begin with `swedle:v1:`. This allows the database to be shared safely with unrelated applications without overwriting or scanning their keys.
 

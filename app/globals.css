@@ -338,7 +338,8 @@ button { color: inherit; }
 }
 .debug-search input:focus, .auth-card input:focus { border-color: #de8a4a; }
 .debug-search ul { position: absolute; z-index: 5; top: 49px; left: 0; right: 0; max-height: 250px; overflow: auto; margin: 0; padding: 5px; border: 1px solid var(--debug-line); background: #111713; list-style: none; }
-.debug-search li button { width: 100%; padding: 10px; border: 0; background: transparent; color: var(--debug-ink); cursor: pointer; text-align: left; font-size: 11px; }
+.debug-search li button { display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; padding: 10px; border: 0; background: transparent; color: var(--debug-ink); cursor: pointer; text-align: left; font-size: 11px; }
+.debug-search li small { flex: 0 0 auto; color: var(--debug-muted); font-size: 9px; letter-spacing: .06em; text-transform: uppercase; }
 .debug-search li button:hover { background: #253029; }
 .debug-primary, .debug-secondary, .debug-danger {
   display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 43px; padding: 0 16px; border: 1px solid var(--debug-line); cursor: pointer; font-size: 10px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase;

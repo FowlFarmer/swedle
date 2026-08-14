@@ -77,4 +77,5 @@ export interface GameState {
 export interface SearchCompany {
   slug: string;
   name: string;
+  dailyEligible: boolean;
 }
