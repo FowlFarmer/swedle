@@ -5,6 +5,7 @@ import { CircleHelp, RotateCw } from "lucide-react";
 import Link from "next/link";
 
 import { CompanySearch } from "@/components/game/company-search";
+import { BrandWordmark } from "@/components/game/brand-wordmark";
 import { GuessBoard } from "@/components/game/guess-board";
 import { Results } from "@/components/game/results";
 import type { GameState, SearchCompany } from "@/lib/types";
@@ -71,7 +72,7 @@ export function Game() {
     <div className="game-frame">
       <header className="site-header">
         <Link className="wordmark" href="/" aria-label="Swedle home">
-          <span>Swedle</span><i>.</i>
+          <BrandWordmark />
         </Link>
         <button className="icon-button" type="button" onClick={() => setRulesOpen((value) => !value)} aria-expanded={rulesOpen}>
           <CircleHelp size={19} strokeWidth={1.8} />
@@ -107,6 +108,11 @@ export function Game() {
               <p className="eyebrow">{state.dateLabel} · {state.puzzleLabel}</p>
               <h1>Guess the company.</h1>
             </div>
+            <svg className="intro-doodle" viewBox="0 0 150 92" aria-hidden="true">
+              <path d="M7 60c23-19 34 17 54-8s38-27 79-18" />
+              <path d="m109 10 3 10 10 3-10 3-3 10-3-10-10-3 10-3 3-10Z" />
+              <path d="m34 14 2 6 7 2-7 2-2 7-2-7-6-2 6-2 2-6Z" />
+            </svg>
             <div className="attempts" aria-label={`${state.attemptsRemaining} guesses remaining`}>
               <strong>{state.attemptsRemaining}</strong>
               <span>{state.attemptsRemaining === 1 ? "guess" : "guesses"}<br />remaining</span>
